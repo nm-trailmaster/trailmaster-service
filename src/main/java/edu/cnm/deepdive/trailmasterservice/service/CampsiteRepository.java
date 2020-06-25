@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CampsiteRepository extends JpaRepository<Campsite, Long> {
 
-  Iterable<Campsite> getAllByOrOrderByRatingAsc();
+  Iterable<Campsite> getAllByOrderByRatingAsc();
 
 }
