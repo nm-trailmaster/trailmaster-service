@@ -41,7 +41,7 @@ public class Campsite {
   private int rating;
 
   @NonNull
-  @Column(length =5_000, nullable = false)
+  @Column(length = 5_000, nullable = false)
   private String comment;
 
   public Long getId() {

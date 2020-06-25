@@ -10,9 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
@@ -40,16 +38,16 @@ public class Photo {
 
   @NonNull // Subject to change along with respective getter and setter.
   @Column(nullable = false)
-  private File filepath;
+  private String filepath;
 
   @ManyToOne(fetch = FetchType.EAGER,
       cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-  @JoinTable(name = "campsite_id")
+  @JoinColumn(name = "campsite_id")
   private Campsite campsite;
 
   @ManyToOne(fetch = FetchType.EAGER,
       cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-  @JoinTable(name = "trail_id")
+  @JoinColumn(name = "trail_id")
   private Trail trail;
 
   public Long getId() {
@@ -65,11 +63,11 @@ public class Photo {
   }
 
   @NonNull
-  public File getFilepath() {
+  public String getFilepath() {
     return filepath;
   }
 
-  public void setFilepath(@NonNull File filepath) {
+  public void setFilepath(@NonNull String filepath) {
     this.filepath = filepath;
   }
 
