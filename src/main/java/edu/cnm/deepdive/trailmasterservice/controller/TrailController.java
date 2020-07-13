@@ -29,13 +29,6 @@ public class TrailController {
   public Iterable<Trail> get() { return trailRepository.getAllByOrderByRatingAsc();
   }
 
-//  @GetMapping(value = "/{id:\\d+}/trail", produces = MediaType.APPLICATION_JSON_VALUE)
-//  public Iterable<Photo> getPhoto(@PathVariable long id) {
-//    return trailRepository.findById(id)
-//        .map(trail -> photoRepository.getAllByTrailOrderByCreatedAsc(trail))
-//        .orElseThrow(() -> new NoSuchElementException());
-//  }
-
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.CREATED)
   public Trail post(@RequestBody Trail trail) {

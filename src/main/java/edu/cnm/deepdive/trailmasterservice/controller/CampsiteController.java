@@ -34,13 +34,6 @@ public class CampsiteController {
     return campsiteRepository.getAllByOrderByRatingAsc();
   }
 
- // @GetMapping(value = "/{id:\\d+}/photo", produces = MediaType.APPLICATION_JSON_VALUE)
- // public Iterable<Photo> getPhoto(@PathVariable long id) {
- //   return campsiteRepository.findById(id)
- //       .map(tag -> photoRepository.getAllByOrderByTextAsc())
- //           .orElseThrow(() -> new NoSuchElementException());
- // }
-
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.CREATED)
   public Campsite post(@RequestBody Campsite campsite) {
