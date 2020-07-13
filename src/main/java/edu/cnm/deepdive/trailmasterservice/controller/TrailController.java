@@ -18,17 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class TrailController {
 
   private final TrailRepository trailRepository;
-  private final PhotoRepository photoRepository;
 
   @Autowired
   public TrailController(TrailRepository trailRepository,
       PhotoRepository photoRepository) {
-    this.photoRepository = photoRepository;
     this.trailRepository = trailRepository;
   }
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public Iterable<Trail> get() { return trailRepository.getAllByOrderByRating();
+  public Iterable<Trail> get() { return trailRepository.getAllByOrderByRatingAsc();
   }
 
 //  @GetMapping(value = "/{id:\\d+}/trail", produces = MediaType.APPLICATION_JSON_VALUE)

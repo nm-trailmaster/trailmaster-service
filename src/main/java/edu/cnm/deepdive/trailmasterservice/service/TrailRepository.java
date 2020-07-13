@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TrailRepository extends JpaRepository<Trail, Long> {
 
-  Iterable<Trail> getAllByOrderByRating();
+  Iterable<Trail> getAllByOrderByRatingAsc();
+
 
 }
