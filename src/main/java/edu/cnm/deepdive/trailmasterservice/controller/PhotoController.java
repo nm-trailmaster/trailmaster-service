@@ -22,15 +22,6 @@ public class PhotoController {
     this.photoRepository = photoRepository;
   }
 
-//  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-//  public Iterable<Photo> getCampsite() {
-//    return photoRepository.getAllByCampsiteOrderByCreatedAsc();
-//  }
-//
-//  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-//  public Iterable<Photo> getTrail() {
-//    return photoRepository.getAllByTrailOrderByCreatedAsc();
-//  }
 
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.CREATED)
