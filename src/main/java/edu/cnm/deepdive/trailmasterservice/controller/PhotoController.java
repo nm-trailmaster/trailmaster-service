@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+/** This controls the server output for Photo. It uses basic CRUD functions.**/
+
 @RestController
 @RequestMapping("/photos")
 public class PhotoController {

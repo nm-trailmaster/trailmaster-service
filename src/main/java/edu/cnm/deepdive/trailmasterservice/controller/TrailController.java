@@ -1,7 +1,6 @@
 package edu.cnm.deepdive.trailmasterservice.controller;
 
 import edu.cnm.deepdive.trailmasterservice.model.entity.Trail;
-import edu.cnm.deepdive.trailmasterservice.service.PhotoRepository;
 import edu.cnm.deepdive.trailmasterservice.service.TrailRepository;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
+/** This controls the server output for trail. It uses basic CRUD functions.**/
 
 @RestController
 @RequestMapping("/trails")

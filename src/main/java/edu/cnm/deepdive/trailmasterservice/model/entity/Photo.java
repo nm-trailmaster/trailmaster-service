@@ -1,6 +1,5 @@
 package edu.cnm.deepdive.trailmasterservice.model.entity;
 
-import java.io.File;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,6 +15,8 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.lang.NonNull;
+
+/** This is the Entity model for Photo that came out of ERD.**/
 
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity

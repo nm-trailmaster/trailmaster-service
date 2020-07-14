@@ -12,6 +12,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.lang.NonNull;
 
+/** This is the Entity model for Trail that came out of ERD.**/
+
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 public class Trail {
