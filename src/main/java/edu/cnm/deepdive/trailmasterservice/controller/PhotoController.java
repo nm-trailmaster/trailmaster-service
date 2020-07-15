@@ -12,19 +12,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-/** This controls the server output for Photo. It uses basic CRUD functions.**/
-
+/**
+ * This controls the server output for Photo. It uses basic CRUD functions.
+ */
 @RestController
 @RequestMapping("/photos")
 public class PhotoController {
 
   private final PhotoRepository photoRepository;
 
+  /**
+   * Instantiates (creates) a new Photo controller.
+   *
+   * @param photoRepository the photo repository
+   */
   public PhotoController(PhotoRepository photoRepository) {
     this.photoRepository = photoRepository;
   }
 
 
+  /**
+   * Allows user to Post photos.
+   *
+   */
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.CREATED)
   public Photo post(@RequestBody Photo photo) {

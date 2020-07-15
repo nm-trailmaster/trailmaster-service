@@ -18,8 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-/** This controls the server output for Campsite. It uses basic CRUD functions.**/
-
+/**
+ * This controls the server output for Campsite. It uses basic CRUD functions.
+ */
 @RestController
 @RequestMapping("/campsites")
 public class CampsiteController {
@@ -27,6 +28,12 @@ public class CampsiteController {
   private final CampsiteRepository campsiteRepository;
   private final PhotoRepository photoRepository;
 
+  /**
+   * Creates a new Campsite controller.
+   *
+   * @param campsiteRepository the campsite repository
+   * @param photoRepository    the photo repository
+   */
   @Autowired
   public CampsiteController(
       CampsiteRepository campsiteRepository,
@@ -35,23 +42,37 @@ public class CampsiteController {
     this.photoRepository = photoRepository;
   }
 
+  /**
+   * Get campsite order by rating asc.
+   *
+   */
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public  Iterable<Campsite> get() {
     return campsiteRepository.getAllByOrderByRatingAsc();
   }
 
+  /**
+   * Get campsite using id, else throws exception.
+   */
   @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Campsite get(@PathVariable long id) {
 
     return campsiteRepository.findById(id).orElseThrow(NoSuchElementException::new);
   }
 
+  /**
+   * Allows campsite to be created (Posted) and saved.
+   */
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.CREATED)
   public Campsite post(@RequestBody Campsite campsite) {
     return campsiteRepository.save(campsite);
   }
 
+  /**
+   * Allows campsite posts to be updated.
+   *
+  */
   @PutMapping(value = "/{id:\\d+}",
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public Campsite putCampsite(@PathVariable long id, @RequestBody Campsite campsite) {

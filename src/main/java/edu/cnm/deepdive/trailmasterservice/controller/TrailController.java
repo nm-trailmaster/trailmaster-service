@@ -15,35 +15,56 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-/** This controls the server output for trail. It uses basic CRUD functions.**/
-
+/**
+ * This controls the server output for trail. It uses basic CRUD functions.
+ */
 @RestController
 @RequestMapping("/trails")
 public class TrailController {
 
   private final TrailRepository trailRepository;
 
+  /**
+   * Creates a new Trail controller.
+   *
+   * @param trailRepository the trail repository
+   */
   @Autowired
   public TrailController(TrailRepository trailRepository) {
     this.trailRepository = trailRepository;
   }
 
+  /**
+   * Gets trail order by raring asc.
+   *
+   */
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public Iterable<Trail> get() { return trailRepository.getAllByOrderByRatingAsc();
   }
 
+  /**
+   * Get trail using id else throws exception.
+   *
+   */
   @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Trail get(@PathVariable long id) {
 
     return trailRepository.findById(id).orElseThrow(NoSuchElementException::new);
   }
 
+  /**
+   * Allows trail to be created (Posted) and saved.
+   *
+   */
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.CREATED)
   public Trail post(@RequestBody Trail trail) {
     return trailRepository.save(trail);
   }
 
+  /**
+   * Allows trail posts to be updated.
+   */
   @PutMapping(value = "/{id:\\d+}",
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public Trail putTrail(@PathVariable long id, @RequestBody Trail trail) {

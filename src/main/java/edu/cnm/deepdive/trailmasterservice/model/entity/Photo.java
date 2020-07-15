@@ -16,8 +16,10 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.lang.NonNull;
 
-/** This is the Entity model for Photo that came out of ERD.**/
 
+/**
+ * Entity Model Photo representing columns from ERD.
+ */
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 public class Photo {
@@ -51,39 +53,67 @@ public class Photo {
   @JoinColumn(name = "trail_id")
   private Trail trail;
 
+  /**
+   * Gets photo id.
+   */
   public Long getId() {
     return id;
   }
 
+  /**
+   * Gets date created.
+   */
   public Date getCreated() {
     return created;
   }
 
+  /**
+   * Gets date photo was updated.
+   */
   public Date getUpdated() {
     return updated;
   }
 
+  /**
+   * Gets filepath of photo.
+   */
   @NonNull
   public String getFilepath() {
     return filepath;
   }
 
+  /**
+   * Sets filepath.
+   */
   public void setFilepath(@NonNull String filepath) {
     this.filepath = filepath;
   }
 
+  /**
+   * Gets campsite id.
+   */
   public Campsite getCampsite() {
     return campsite;
   }
 
+  /**
+   * Sets campsite id.
+   */
   public void setCampsite(Campsite campsite) {
     this.campsite = campsite;
   }
 
+  /**
+   * Gets trail id.
+   */
   public Trail getTrail() {
     return trail;
   }
 
+
+  /**
+   * Sets trail id.
+   */
   public void setTrail(Trail trail) {
     this.trail = trail;
   }
