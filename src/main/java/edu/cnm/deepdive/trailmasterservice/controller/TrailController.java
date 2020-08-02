@@ -2,10 +2,15 @@ package edu.cnm.deepdive.trailmasterservice.controller;
 
 import edu.cnm.deepdive.trailmasterservice.model.entity.Trail;
 import edu.cnm.deepdive.trailmasterservice.service.TrailRepository;
+import edu.cnm.deepdive.trailmasterservice.service.UserService;
+import java.security.AccessControlException;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,15 +28,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class TrailController {
 
   private final TrailRepository trailRepository;
+  private final UserService userService;
 
   /**
    * Creates a new Trail controller.
    *
    * @param trailRepository the trail repository
+   * @param userService
    */
   @Autowired
-  public TrailController(TrailRepository trailRepository) {
+  public TrailController(TrailRepository trailRepository,
+      UserService userService) {
     this.trailRepository = trailRepository;
+    this.userService = userService;
   }
 
   /**
@@ -57,9 +66,14 @@ public class TrailController {
    *
    */
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  @ResponseStatus(HttpStatus.CREATED)
-  public Trail post(@RequestBody Trail trail) {
-    return trailRepository.save(trail);
+  public ResponseEntity<Trail> post(@RequestBody Trail trail, Authentication auth) {
+    return userService.get(auth)
+        .map((user) -> {
+          trail.setAuthor(user);
+          trailRepository.save(trail);
+          return ResponseEntity.created(trail.getHref()).body(trail);
+        })
+        .orElseThrow(NoSuchElementException::new);
   }
 
   /**
@@ -67,11 +81,34 @@ public class TrailController {
    */
   @PutMapping(value = "/{id:\\d+}",
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Trail putTrail(@PathVariable long id, @RequestBody Trail trail) {
-     trail = get(id);
-    if (trail != null && trail.getId() != null) {
-      trail = trailRepository.findById(trail.getId()).orElseThrow(NoSuchElementException::new);
-    }
-    return trailRepository.save(trail);
+  public Trail putTrail(@PathVariable long id, @RequestBody Trail trail, Authentication auth) {
+    return userService.get(auth)
+        .flatMap((user) -> trailRepository.findById(id))
+        .map((existing) -> {
+          if (trail.getComment() != null) {
+            existing.setComment(trail.getComment());
+          }
+          if (trail.getLatitude() != null) {
+            existing.setLatitude(trail.getLatitude());
+          }
+          if (trail.getLongitude() != null) {
+            existing.setLongitude(trail.getLongitude());
+          }
+          return trailRepository.save(existing);
+        })
+        .orElseThrow(NoSuchElementException::new);
   }
+
+  @DeleteMapping(value = "/{id:\\d+")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void delete(@PathVariable long id, Authentication auth) {
+    userService.get(auth)
+        .flatMap((user) -> trailRepository.findById(id))
+        .map((existing) -> {
+          trailRepository.delete(existing);
+          return null;
+        })
+        .orElseThrow(NoSuchElementException::new);
+  }
+
 }

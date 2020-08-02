@@ -1,23 +1,44 @@
 package edu.cnm.deepdive.trailmasterservice.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import edu.cnm.deepdive.trailmasterservice.view.FlatTrail;
+import edu.cnm.deepdive.trailmasterservice.view.FlatUser;
+import java.net.URI;
 import java.util.Date;
+import javax.annotation.PostConstruct;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.server.EntityLinks;
 import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Component;
 
 /**
  * This is the Entity model for Trail representing columns from ERD.
  */
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
-public class Trail {
+@Component
+@JsonIgnoreProperties(
+    value = {"id", "created", "updated", "href"},
+    allowGetters = true,
+    ignoreUnknown = true
+)
+public class Trail implements FlatTrail {
+
+  private static EntityLinks entityLinks;
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,10 +56,10 @@ public class Trail {
   private Date updated;
 
   @Column(nullable = false)
-  private double latitude;
+  private Double latitude;
 
   @Column(nullable = false)
-  private double longitude;
+  private Double longitude;
 
   @Column(nullable = false)
   private int rating;
@@ -46,6 +67,12 @@ public class Trail {
   @NonNull
   @Column(length = 5_000,nullable = false)
   private String comment;
+
+  @JsonSerialize(as = FlatUser.class)
+  @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+  @JoinColumn(name = "author_id")
+  private User author;
+  // TODO add to erd.
 
   /**
    * Gets trail id.
@@ -83,7 +110,7 @@ public class Trail {
    * Gets trail latitude.
    *
    */
-  public double getLatitude() {
+  public Double getLatitude() {
     return latitude;
   }
 
@@ -91,7 +118,7 @@ public class Trail {
    * Sets trail latitude.
    *
    */
-  public void setLatitude(double latitude) {
+  public void setLatitude(Double latitude) {
     this.latitude = latitude;
   }
 
@@ -99,7 +126,7 @@ public class Trail {
    * Gets trail longitude.
    *
    */
-  public double getLongitude() {
+  public Double getLongitude() {
     return longitude;
   }
 
@@ -107,7 +134,7 @@ public class Trail {
    * Sets trail longitude.
    *
    */
-  public void setLongitude(double longitude) {
+  public void setLongitude(Double longitude) {
     this.longitude = longitude;
   }
 
@@ -126,6 +153,31 @@ public class Trail {
    */
   public void setComment(@NonNull String comment) {
     this.comment = comment;
+  }
+
+  public User getAuthor() {
+    return author;
+  }
+
+  public void setAuthor(User author) {
+    this.author = author;
+  }
+
+  @PostConstruct // TODO implement in all entity classes.
+  private void initHateoas() {
+    //noinspection ResultOfMethodCallIgnored
+    entityLinks.toString();
+  }
+
+  @Autowired
+  private void setEntityLinks(
+      @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") EntityLinks entityLinks) {
+    Trail.entityLinks = entityLinks;
+  }
+
+  @Override
+  public URI getHref() {
+    return (id != null) ? entityLinks.linkForItemResource(Trail.class, id).toUri() : null;
   }
 
 }
