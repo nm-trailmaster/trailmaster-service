@@ -1,6 +1,5 @@
 package edu.cnm.deepdive.trailmasterservice.model.entity;
 
-import java.net.URI;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import edu.cnm.deepdive.trailmasterservice.view.FlatTrail;
@@ -27,7 +26,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 /**
- * This is the Entity model for Trail representing columns from ERD.
+ * The type Trail.
  */
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
@@ -46,7 +45,8 @@ public class Trail implements FlatTrail {
   @Column(name = "trail_id", nullable = false, updatable = false)
   private Long id;
 
-  @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+  @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE,
+      CascadeType.REFRESH})
   @JoinColumn(name = "user_id", updatable = false)
   private User user;
 
@@ -70,112 +70,128 @@ public class Trail implements FlatTrail {
   private Integer rating;
 
   @NonNull
-  @Column(length = 5_000,nullable = false)
+  @Column(length = 5_000, nullable = false)
   private String comment;
 
   @JsonSerialize(as = FlatUser.class)
-  @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+  @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE,
+      CascadeType.REFRESH})
   @JoinColumn(name = "author_id")
   private User author;
   // TODO add to erd.
 
-  /**
-   * Gets trail id.
-   *
-   */
   public Long getId() {
     return id;
   }
 
+  /**
+   * Gets user.
+   *
+   * @return the user
+   */
   public User getUser() {
     return user;
   }
 
+  /**
+   * Sets user.
+   *
+   * @param user the user
+   */
   public void setUser(User user) {
     this.user = user;
   }
 
-  /**
-   * Gets date created.
-   *
-   */
   public Date getCreated() {
     return created;
   }
 
-  /**
-   * Gets date trail was updated.
-   *
-   */
   public Date getUpdated() {
     return updated;
   }
 
   /**
-   * Gets trail rating.
+   * Gets rating.
    *
+   * @return the rating
    */
   public Integer getRating() {
     return rating;
   }
 
+  /**
+   * Sets rating.
+   *
+   * @param rating the rating
+   */
   public void setRating(Integer rating) {
     this.rating = rating;
   }
 
   /**
-   * Gets trail latitude.
+   * Gets latitude.
    *
+   * @return the latitude
    */
   public Double getLatitude() {
     return latitude;
   }
 
   /**
-   * Sets trail latitude.
+   * Sets latitude.
    *
+   * @param latitude the latitude
    */
   public void setLatitude(Double latitude) {
     this.latitude = latitude;
   }
 
   /**
-   * Gets trail longitude.
+   * Gets longitude.
    *
+   * @return the longitude
    */
   public Double getLongitude() {
     return longitude;
   }
 
   /**
-   * Sets trail longitude.
+   * Sets longitude.
    *
+   * @param longitude the longitude
    */
   public void setLongitude(Double longitude) {
     this.longitude = longitude;
   }
 
-  /**
-   * Gets comments entered by users regarding special directions or a description of the trail.
-   *
-   */
   @NonNull
   public String getComment() {
     return comment;
   }
 
   /**
-   * Sets user comment.
+   * Sets comment.
    *
+   * @param comment the comment
    */
   public void setComment(@NonNull String comment) {
     this.comment = comment;
   }
 
+  /**
+   * Gets author.
+   *
+   * @return the author
+   */
   public User getAuthor() {
     return author;
   }
 
+  /**
+   * Sets author.
+   *
+   * @param author the author
+   */
   public void setAuthor(User author) {
     this.author = author;
   }

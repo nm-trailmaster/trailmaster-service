@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * This controls the server output for trail. It uses basic CRUD functions.
+ * The type Trail controller.
  */
 @RestController
 @RequestMapping("/trails")
@@ -31,10 +31,10 @@ public class TrailController {
   private final UserService userService;
 
   /**
-   * Creates a new Trail controller.
+   * Instantiates a new Trail controller.
    *
    * @param trailRepository the trail repository
-   * @param userService
+   * @param userService     the user service
    */
   @Autowired
   public TrailController(TrailRepository trailRepository,
@@ -44,16 +44,19 @@ public class TrailController {
   }
 
   /**
-   * Gets trail order by raring asc.
+   * Get iterable.
    *
+   * @return the iterable
    */
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public Iterable<Trail> get() { return trailRepository.getAllByOrderByRatingAsc();
   }
 
   /**
-   * Get trail using id else throws exception.
+   * Get trail.
    *
+   * @param id the id
+   * @return the trail
    */
   @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Trail get(@PathVariable long id) {
@@ -62,8 +65,11 @@ public class TrailController {
   }
 
   /**
-   * Allows trail to be created (Posted) and saved.
+   * Post response entity.
    *
+   * @param trail the trail
+   * @param auth  the auth
+   * @return the response entity
    */
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Trail> post(@RequestBody Trail trail, Authentication auth) {
@@ -77,7 +83,12 @@ public class TrailController {
   }
 
   /**
-   * Allows trail posts to be updated.
+   * Put trail trail.
+   *
+   * @param id    the id
+   * @param trail the trail
+   * @param auth  the auth
+   * @return the trail
    */
   @PutMapping(value = "/{id:\\d+}",
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -99,6 +110,12 @@ public class TrailController {
         .orElseThrow(NoSuchElementException::new);
   }
 
+  /**
+   * Delete.
+   *
+   * @param id   the id
+   * @param auth the auth
+   */
   @DeleteMapping(value = "/{id:\\d+")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable long id, Authentication auth) {

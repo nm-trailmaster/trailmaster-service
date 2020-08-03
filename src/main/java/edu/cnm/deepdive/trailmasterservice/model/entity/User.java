@@ -28,6 +28,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.EntityLinks;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type User.
+ */
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(name = "user_profile")
@@ -95,15 +98,29 @@ public class User implements FlatUser {
   }
 
 
-
+  /**
+   * Sets display name.
+   *
+   * @param displayName the display name
+   */
   public void setDisplayName(String displayName) {
     this.displayName = displayName;
   }
 
+  /**
+   * Gets oauth key.
+   *
+   * @return the oauth key
+   */
   public String getOauthKey() {
     return oauthKey;
   }
 
+  /**
+   * Sets oauth key.
+   *
+   * @param oauthKey the oauth key
+   */
   public void setOauthKey(String oauthKey) {
     this.oauthKey = oauthKey;
   }
@@ -113,34 +130,54 @@ public class User implements FlatUser {
     return role;
   }
 
+  /**
+   * Sets role.
+   *
+   * @param role the role
+   */
   public void setRole(Role role) {
     this.role = role;
   }
 
-    public List<Trail> getTrails() {
-      return trails;
-    }
-
-    @PostConstruct
-    private void initHateoas() {
-      //noinspection ResultOfMethodCallIgnored
-      entityLinks.toString();
-    }
-
-    @Autowired
-    private void setEntityLinks (
-        @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") EntityLinks entityLinks){
-      User.entityLinks = entityLinks;
-    }
-
-    @Override
-    public URI getHref() {
-      return (id != null) ? entityLinks.linkForItemResource(User.class, id).toUri() : null;
-    }
-
-    public enum Role {
-      USER, ADMINISTRATOR
-    }
-
+  /**
+   * Gets trails.
+   *
+   * @return the trails
+   */
+  public List<Trail> getTrails() {
+    return trails;
   }
+
+  @PostConstruct
+  private void initHateoas() {
+    //noinspection ResultOfMethodCallIgnored
+    entityLinks.toString();
+  }
+
+  @Autowired
+  private void setEntityLinks(
+      @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") EntityLinks entityLinks) {
+    User.entityLinks = entityLinks;
+  }
+
+  @Override
+  public URI getHref() {
+    return (id != null) ? entityLinks.linkForItemResource(User.class, id).toUri() : null;
+  }
+
+  /**
+   * The enum Role.
+   */
+  public enum Role {
+    /**
+     * User role.
+     */
+    USER,
+    /**
+     * Administrator role.
+     */
+    ADMINISTRATOR
+  }
+
+}
 

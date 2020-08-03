@@ -27,6 +27,9 @@ import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConv
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type Google token service.
+ */
 @Component
 public class GoogleTokenService implements ResourceServerTokenServices {
 
@@ -38,6 +41,12 @@ public class GoogleTokenService implements ResourceServerTokenServices {
   private final AccessTokenConverter converter;
   private final UserService userService;
 
+  /**
+   * Instantiates a new Google token service.
+   *
+   * @param clientId    the client id
+   * @param userService the user service
+   */
   @Autowired
   public GoogleTokenService(@Value("${oauth.clientId}") String clientId, UserService userService) {
     this.clientId = clientId;

@@ -13,10 +13,12 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 
+/**
+ * The type Trailmaster service application.
+ */
 @SpringBootApplication
 @EnableWebSecurity
 @EnableResourceServer
-
 
 @EnableHypermediaSupport(type = HypermediaType.HAL)
 public class TrailmasterServiceApplication extends ResourceServerConfigurerAdapter {
@@ -24,6 +26,11 @@ public class TrailmasterServiceApplication extends ResourceServerConfigurerAdapt
   @Value("${oauth.clientId}")
   private String clientId;
 
+  /**
+   * The entry point of application.
+   *
+   * @param args the input arguments
+   */
   public static void main(String[] args) {
     SpringApplication.run(TrailmasterServiceApplication.class, args);
   }
