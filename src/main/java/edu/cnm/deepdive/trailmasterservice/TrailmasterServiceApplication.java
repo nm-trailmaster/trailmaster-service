@@ -12,6 +12,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.hateoas.config.EnableHypermediaSupport;
+import org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType;
 
 @SpringBootApplication
 @EnableWebSecurity
@@ -21,6 +23,8 @@ public class TrailmasterServiceApplication extends ResourceServerConfigurerAdapt
 
   @Value("${oauth.clientId}")
   private String clientId;
+@EnableHypermediaSupport(type = HypermediaType.HAL)
+public class TrailmasterServiceApplication {
 
   public static void main(String[] args) {
     SpringApplication.run(TrailmasterServiceApplication.class, args);

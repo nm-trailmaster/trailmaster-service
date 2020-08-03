@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.trailmasterservice.model.entity;
 
+import java.net.URI;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import edu.cnm.deepdive.trailmasterservice.view.FlatTrail;
@@ -29,6 +30,7 @@ import org.springframework.stereotype.Component;
  * This is the Entity model for Trail representing columns from ERD.
  */
 @SuppressWarnings("JpaDataSourceORMInspection")
+@Component
 @Entity
 @Component
 @JsonIgnoreProperties(
@@ -40,10 +42,16 @@ public class Trail implements FlatTrail {
 
   private static EntityLinks entityLinks;
 
+  private static EntityLinks entityLinks;
+
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "trail_id", nullable = false, updatable = false)
   private Long id;
+
+  @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+  @JoinColumn(name = "user_id", updatable = false)
+  private User user;
 
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
@@ -62,7 +70,7 @@ public class Trail implements FlatTrail {
   private Double longitude;
 
   @Column(nullable = false)
-  private int rating;
+  private Integer rating;
 
   @NonNull
   @Column(length = 5_000,nullable = false)
@@ -80,6 +88,14 @@ public class Trail implements FlatTrail {
    */
   public Long getId() {
     return id;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
   }
 
   /**
@@ -102,8 +118,12 @@ public class Trail implements FlatTrail {
    * Gets trail rating.
    *
    */
-  public int getRating() {
+  public Integer getRating() {
     return rating;
+  }
+
+  public void setRating(Integer rating) {
+    this.rating = rating;
   }
 
   /**
@@ -175,7 +195,6 @@ public class Trail implements FlatTrail {
     Trail.entityLinks = entityLinks;
   }
 
-  @Override
   public URI getHref() {
     return (id != null) ? entityLinks.linkForItemResource(Trail.class, id).toUri() : null;
   }
