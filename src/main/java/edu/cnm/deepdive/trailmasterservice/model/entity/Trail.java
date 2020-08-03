@@ -30,7 +30,6 @@ import org.springframework.stereotype.Component;
  * This is the Entity model for Trail representing columns from ERD.
  */
 @SuppressWarnings("JpaDataSourceORMInspection")
-@Component
 @Entity
 @Component
 @JsonIgnoreProperties(
@@ -39,8 +38,6 @@ import org.springframework.stereotype.Component;
     ignoreUnknown = true
 )
 public class Trail implements FlatTrail {
-
-  private static EntityLinks entityLinks;
 
   private static EntityLinks entityLinks;
 
