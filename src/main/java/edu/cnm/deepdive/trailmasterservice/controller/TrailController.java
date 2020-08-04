@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,16 +45,15 @@ public class TrailController {
   }
 
   /**
-   * Get iterable.
+   * Gets trail order by raring asc.
    *
-   * @return the iterable
    */
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public Iterable<Trail> get() { return trailRepository.getAllByOrderByRatingAsc();
   }
 
   /**
-   * Get trail.
+   * Get trail using id else throws exception.
    *
    * @param id the id
    * @return the trail
@@ -65,7 +65,7 @@ public class TrailController {
   }
 
   /**
-   * Post response entity.
+   * Allows trail to be created (Posted) and saved.
    *
    * @param trail the trail
    * @param auth  the auth
@@ -128,4 +128,14 @@ public class TrailController {
         .orElseThrow(NoSuchElementException::new);
   }
 
+
+  @ResponseStatus(HttpStatus.NOT_FOUND)
+  @ExceptionHandler(NoSuchElementException.class)
+  public void notFound() {
+  }
+
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  @ExceptionHandler(Exception.class)
+  public void badRequest() {
+  }
 }
