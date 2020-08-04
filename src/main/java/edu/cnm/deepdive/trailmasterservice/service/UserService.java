@@ -4,8 +4,6 @@ import edu.cnm.deepdive.trailmasterservice.model.entity.User;
 import edu.cnm.deepdive.trailmasterservice.model.entity.User.Role;
 import java.security.AccessControlException;
 import java.util.Optional;
-import javax.swing.text.html.Option;
-import org.graalvm.compiler.lir.LIRInstruction.Use;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;

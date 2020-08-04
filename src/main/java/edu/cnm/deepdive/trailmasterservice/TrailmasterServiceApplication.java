@@ -19,7 +19,6 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 @SpringBootApplication
 @EnableWebSecurity
 @EnableResourceServer
-
 @EnableHypermediaSupport(type = HypermediaType.HAL)
 public class TrailmasterServiceApplication extends ResourceServerConfigurerAdapter {
 
