@@ -38,7 +38,7 @@ public class UserService {
         .orElseGet(() -> {
           User user = new User();
           user.setOauthKey(oauthKey);
-          user.setOauthKey(displayName);
+          user.setDisplayName(displayName);
           return userRepository.save(user);
         });
   }

@@ -6,6 +6,7 @@ import edu.cnm.deepdive.trailmasterservice.service.UserService;
 import java.security.AccessControlException;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/trails")
+@ExposesResourceFor(Trail.class)
 public class TrailController {
 
   private final TrailRepository trailRepository;
@@ -49,7 +51,8 @@ public class TrailController {
    *
    */
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public Iterable<Trail> get() { return trailRepository.getAllByOrderByRatingAsc();
+  public Iterable<Trail> get() {
+    return trailRepository.getAllByOrderByRatingAsc();
   }
 
   /**
@@ -134,8 +137,9 @@ public class TrailController {
   public void notFound() {
   }
 
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
-  @ExceptionHandler(Exception.class)
-  public void badRequest() {
-  }
+  // TODO Define more specfic expection handlers
+//  @ResponseStatus(HttpStatus.BAD_REQUEST)
+//  @ExceptionHandler(Exception.class)
+//  public void badRequest() {
+//  }
 }
