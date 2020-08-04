@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -73,5 +74,15 @@ public class TrailController {
       trail = trailRepository.findById(trail.getId()).orElseThrow(NoSuchElementException::new);
     }
     return trailRepository.save(trail);
+  }
+
+  @ResponseStatus(HttpStatus.NOT_FOUND)
+  @ExceptionHandler(NoSuchElementException.class)
+  public void notFound() {
+  }
+
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  @ExceptionHandler(Exception.class)
+  public void badRequest() {
   }
 }
