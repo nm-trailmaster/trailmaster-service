@@ -60,6 +60,9 @@ public class Trail implements FlatTrail {
   @Column(nullable = false)
   private Date updated;
 
+  @Column()
+  private String name;
+
   @Column(nullable = false)
   private Double latitude;
 
@@ -128,11 +131,22 @@ public class Trail implements FlatTrail {
     this.rating = rating;
   }
 
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
   /**
    * Gets latitude.
    *
    * @return the latitude
    */
+
+
+
   public Double getLatitude() {
     return latitude;
   }

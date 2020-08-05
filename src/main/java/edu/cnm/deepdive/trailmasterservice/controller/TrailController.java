@@ -119,7 +119,7 @@ public class TrailController {
    * @param id   the id
    * @param auth the auth
    */
-  @DeleteMapping(value = "/{id:\\d+")
+  @DeleteMapping(value = "/{id:\\d+}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable long id, Authentication auth) {
     userService.get(auth)
@@ -130,16 +130,4 @@ public class TrailController {
         })
         .orElseThrow(NoSuchElementException::new);
   }
-
-
-  @ResponseStatus(HttpStatus.NOT_FOUND)
-  @ExceptionHandler(NoSuchElementException.class)
-  public void notFound() {
-  }
-
-  // TODO Define more specfic expection handlers
-//  @ResponseStatus(HttpStatus.BAD_REQUEST)
-//  @ExceptionHandler(Exception.class)
-//  public void badRequest() {
-//  }
 }
